@@ -38,7 +38,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Generate stats card
-        uses: soulteary/github-readme-stats-action@v1.1.0
+        uses: soulteary/github-readme-stats-action@v1
         with:
           card: stats
           options: 'username=${{ github.repository_owner }}&show_icons=true'
@@ -46,7 +46,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate top languages card
-        uses: soulteary/github-readme-stats-action@v1.1.0
+        uses: soulteary/github-readme-stats-action@v1
         with:
           card: top-langs
           options: 'username=${{ github.repository_owner }}&layout=compact&langs_count=6'
@@ -54,7 +54,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Generate pin card
-        uses: soulteary/github-readme-stats-action@v1.1.0
+        uses: soulteary/github-readme-stats-action@v1
         with:
           card: pin
           options: 'username=soulteary&repo=github-readme-stats'
@@ -162,7 +162,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate stats card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: stats
     options: 'username=${{ github.repository_owner }}'
@@ -176,7 +176,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate stats card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: stats
     options: 'username=${{ github.repository_owner }}&theme=dark'
@@ -190,7 +190,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate stats card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: stats
     options: 'username=${{ github.repository_owner }}&layout=compact'
@@ -204,7 +204,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate stats card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: stats
     options: 'username=${{ github.repository_owner }}&show_icons=true'
@@ -218,7 +218,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate stats card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: stats
     options: 'username=${{ github.repository_owner }}&bg_color=0d1117&title_color=ff6b6b&text_color=c9d1d9&border_color=30363d'
@@ -232,7 +232,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate stats card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: stats
     options: 'username=${{ github.repository_owner }}&hide_rank=true&show_icons=true'
@@ -248,7 +248,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate pin card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats'
@@ -262,7 +262,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate pin card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats&theme=dark'
@@ -276,7 +276,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate pin card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats&show_owner=true'
@@ -292,7 +292,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate top languages card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: top-langs
     options: 'username=${{ github.repository_owner }}'
@@ -306,7 +306,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate top languages card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&layout=compact&langs_count=6'
@@ -320,7 +320,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate top languages card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&theme=radical&langs_count=8'
@@ -334,7 +334,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate top languages card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&hide=html,css,scss'
@@ -350,7 +350,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate gist card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: gist
     options: 'id=bbfce31e0217a3689c8d961a356cb10d'
@@ -364,7 +364,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate gist card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: gist
     options: 'id=bbfce31e0217a3689c8d961a356cb10d&theme=dark'
@@ -380,7 +380,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate wakatime card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: wakatime
     options: 'username=yourname'
@@ -394,7 +394,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate wakatime card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: wakatime
     options: 'username=yourname&layout=compact'
@@ -408,7 +408,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate wakatime card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: wakatime
     options: 'username=yourname&theme=radical&langs_count=5'
@@ -422,7 +422,7 @@ Here are some examples of what you can create with this action:
 
 ```yaml
 - name: Generate wakatime card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: wakatime
     options: 'username=yourname&hide_progress=true'
@@ -438,7 +438,7 @@ You can also use JSON format for options:
 
 ```yaml
 - name: Generate stats card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: stats
     options: '{"username":"${{ github.repository_owner }}","show_icons":true,"hide_rank":true,"theme":"dark"}'
@@ -452,7 +452,7 @@ You can specify a specific version of the binary to use:
 
 ```yaml
 - name: Generate stats card
-  uses: soulteary/github-readme-stats-action@v1.1.0
+  uses: soulteary/github-readme-stats-action@v1
   with:
     card: stats
     options: 'username=${{ github.repository_owner }}&show_icons=true'
