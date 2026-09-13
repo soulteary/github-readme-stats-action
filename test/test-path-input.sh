@@ -123,6 +123,46 @@ case "$out" in
   *"Resolved output path: inside.svg"*) pass "symlink staying inside" ;;
   *) fail "symlink staying inside" "unexpected: ${out//$'\n'/ | }" ;;
 esac
+# A write follows every hop, so containment is decided by the END of the chain.
+# "chain.svg -> hop -> $outside/card.svg" looks innocent one hop in: readlink
+# reports "hop", whose directory is the workspace itself.
+ln -sfn "$outside/card.svg" hop
+ln -sfn hop chain.svg
+out="$(run_with_path "chain.svg")"
+case "$out" in
+  *"resolves outside the workspace through a symlink"*) pass "symlink chain escapes" ;;
+  *) fail "symlink chain escapes" "not refused: ${out//$'\n'/ | }" ;;
+esac
+# ...and the fix must be resolution, not a blanket refusal of chains: a chain
+# that stays inside is as valid as a single hop that does.
+ln -sfn real/card.svg hop_inside
+ln -sfn hop_inside chain_inside.svg
+out="$(run_with_path "chain_inside.svg")"
+case "$out" in
+  *"resolves outside"*|*"path must"*) fail "symlink chain staying inside" "wrongly refused: ${out//$'\n'/ | }" ;;
+  *"Resolved output path: chain_inside.svg"*) pass "symlink chain staying inside" ;;
+  *) fail "symlink chain staying inside" "unexpected: ${out//$'\n'/ | }" ;;
+esac
+# A chain target can carry its own "..", and "cd" without -P cancels it against
+# the logical path before following any symlink -- so "link/.." reads as the
+# workspace while a write through it lands beside link's real parent.
+mkdir -p "$outside/dir"
+ln -sfn "$outside/dir" hoplink
+ln -sfn 'hoplink/../evil.svg' dotdot.svg
+out="$(run_with_path "dotdot.svg")"
+case "$out" in
+  *"resolves outside the workspace through a symlink"*) pass "symlink target with .. escapes" ;;
+  *) fail "symlink target with .." "not refused: ${out//$'\n'/ | }" ;;
+esac
+# A cycle must be refused rather than walked forever. If the hop bound ever
+# regresses, this case stops terminating and the job times out.
+ln -sfn loop_b.svg loop_a.svg
+ln -sfn loop_a.svg loop_b.svg
+out="$(run_with_path "loop_a.svg")"
+case "$out" in
+  *"resolves outside the workspace through a symlink"*) pass "symlink cycle" ;;
+  *) fail "symlink cycle" "not refused: ${out//$'\n'/ | }" ;;
+esac
 cd "$ROOT" || exit 1
 
 echo "accepted:"

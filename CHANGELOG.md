@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.2] - 2026-09-13
+
+### Security
+- A symlink chain can no longer escape the workspace. v1.2.1 resolved one hop:
+  `readlink` reports the first target only, so for
+  `card.svg -> hop -> /tmp/outside/card.svg` it returned `hop`, whose directory
+  is the workspace itself, and the check accepted it. The write follows the rest
+  of the chain, so the bytes landed at `/tmp/outside/card.svg` with nothing
+  written inside the workspace — the containment hole v1.2.0 exists to close,
+  reopened by v1.2.1's fix for the over-broad rule. The chain is now walked to
+  its end and the same containment test applied to where it lands, bounded so a
+  cycle (`a -> b -> a`) is refused rather than followed forever. Containment
+  is judged with physical path resolution, so a `..` in a chain target is
+  resolved the way the kernel resolves it rather than cancelled lexically
+  against the symlink that precedes it.
+
+  `@v1` and `@v1.2.1` are affected; `@v1.2.0` and earlier are not, since v1.2.0
+  refused every symlink and v1.1.0 had no containment check to bypass.
+
+### Changed
+- A dangling symlink whose target stays inside the workspace
+  (`x.svg -> nowhere/y.svg`) is accepted rather than refused. It is contained,
+  which is all this check judges, and the refusal it used to produce said the
+  path resolved *outside* the workspace — which was not true of it. The write
+  then fails on its own merits.
+
 ## [1.2.1] - 2026-09-13
 
 ### Fixed
@@ -20,9 +46,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   all still refused.
 
 ### Changed
-- Every `uses:` example across the six README translations now pins `@v1.2.1`.
-  They still pointed at `@v1.1.0`, so a reader copying the documented example
-  ran the version from before the path-containment work.
+- Every `uses:` example across the six README translations now points at the
+  `@v1` alias. They still pointed at `@v1.1.0`, so a reader copying the
+  documented example ran the version from before the path-containment work.
+  (This entry originally said `@v1.2.1`; the alias landed in the same release
+  and is what shipped.)
 
 ## [1.2.0] - 2026-09-13
 
@@ -117,7 +145,8 @@ not a pure fix. A workflow that branches on it will take a different path:
 The second and third rows are the ones to check before upgrading: a step that
 has silently never run will start running.
 
-[Unreleased]: https://github.com/soulteary/github-readme-stats-action/compare/v1.2.1...main
+[Unreleased]: https://github.com/soulteary/github-readme-stats-action/compare/v1.2.2...main
+[1.2.2]: https://github.com/soulteary/github-readme-stats-action/compare/v1.2.1...v1.2.2
 [1.2.1]: https://github.com/soulteary/github-readme-stats-action/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/soulteary/github-readme-stats-action/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/soulteary/github-readme-stats-action/compare/v1.0.0...v1.1.0
