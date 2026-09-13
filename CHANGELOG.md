@@ -18,7 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   written inside the workspace — the containment hole v1.2.0 exists to close,
   reopened by v1.2.1's fix for the over-broad rule. The chain is now walked to
   its end and the same containment test applied to where it lands, bounded so a
-  cycle (`a -> b -> a`) is refused rather than followed forever.
+  cycle (`a -> b -> a`) is refused rather than followed forever. Containment
+  is judged with physical path resolution, so a `..` in a chain target is
+  resolved the way the kernel resolves it rather than cancelled lexically
+  against the symlink that precedes it.
 
   `@v1` and `@v1.2.1` are affected; `@v1.2.0` and earlier are not, since v1.2.0
   refused every symlink and v1.1.0 had no containment check to bypass.
