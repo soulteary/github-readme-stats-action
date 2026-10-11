@@ -17,6 +17,12 @@ Generate [GitHub Readme Stats](https://github.com/soulteary/github-readme-stats)
 
 This Action uses the Go implementation of `github-readme-stats` service, downloading pre-built binaries from GitHub Releases and calling them via CLI to generate statistics cards.
 
+## Token setup
+
+Create a personal access token (classic) with `public_repo` and `read:user` for public statistics. To include private repositories, use `repo` instead of `public_repo`; this scope also grants repository write access. Set an expiration date and renew the secret when the token expires.
+
+In the repository running the workflow, open **Settings → Secrets and variables → Actions**, create a repository secret named `PROFILE_STATS_TOKEN`, and store the token there. Pass it through the `token` input as shown below. The automatic `GITHUB_TOKEN` is scoped to the workflow repository and can fail when fetching profile statistics across repositories. Keep `contents: write` for committing generated cards; checkout and push can continue using the automatic token.
+
 ## Quick Start
 
 ```yaml
@@ -43,7 +49,7 @@ jobs:
           card: stats
           options: 'username=${{ github.repository_owner }}&show_icons=true'
           path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Generate top languages card
         uses: soulteary/github-readme-stats-action@v1
@@ -51,7 +57,7 @@ jobs:
           card: top-langs
           options: 'username=${{ github.repository_owner }}&layout=compact&langs_count=6'
           path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Generate pin card
         uses: soulteary/github-readme-stats-action@v1
@@ -59,7 +65,7 @@ jobs:
           card: pin
           options: 'username=soulteary&repo=github-readme-stats'
           path: profile/pin-github-readme-stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Commit cards
         run: |
@@ -87,7 +93,7 @@ This action is a recommended deployment option. You can also deploy on Vercel or
 - `card` (required): Card type to generate. Supported: `stats`, `top-langs`, `pin`, `wakatime`, `gist`.
 - `options`: Options for the card as a query string (`key=value&...`) or JSON. If `username` is omitted, the action uses the repository owner.
 - `path`: Output path for the SVG file. Defaults to `profile/<card>.svg`.
-- `token`: GitHub token (PAT or `GITHUB_TOKEN`). For private repo stats, use a [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) with `repo` and `read:user` scopes.
+- `token`: PAT for cross-repository statistics, supplied via `${{ secrets.PROFILE_STATS_TOKEN }}`. See [token setup](README.md#token-setup).
 - `version`: Version of github-readme-stats binary to use (e.g., `v1.1.0`). Defaults to `v1.1.0`. Use `latest` to get the latest release.
 - `repo`: GitHub repository in format `owner/repo`. Defaults to `soulteary/github-readme-stats`.
 
@@ -167,7 +173,7 @@ Here are some examples of what you can create with this action:
     card: stats
     options: 'username=${{ github.repository_owner }}'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats](.github/assets/stats-basic.svg)
@@ -181,7 +187,7 @@ Here are some examples of what you can create with this action:
     card: stats
     options: 'username=${{ github.repository_owner }}&theme=dark'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Dark](.github/assets/stats-dark.svg)
@@ -195,7 +201,7 @@ Here are some examples of what you can create with this action:
     card: stats
     options: 'username=${{ github.repository_owner }}&layout=compact'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Compact](.github/assets/stats-compact.svg)
@@ -209,7 +215,7 @@ Here are some examples of what you can create with this action:
     card: stats
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats With Icons](.github/assets/stats-icons.svg)
@@ -223,7 +229,7 @@ Here are some examples of what you can create with this action:
     card: stats
     options: 'username=${{ github.repository_owner }}&bg_color=0d1117&title_color=ff6b6b&text_color=c9d1d9&border_color=30363d'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Custom](.github/assets/stats-custom.svg)
@@ -237,7 +243,7 @@ Here are some examples of what you can create with this action:
     card: stats
     options: 'username=${{ github.repository_owner }}&hide_rank=true&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Hide Rank](.github/assets/stats-hide-rank.svg)
@@ -253,7 +259,7 @@ Here are some examples of what you can create with this action:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo](.github/assets/repo-basic.svg)
@@ -267,7 +273,7 @@ Here are some examples of what you can create with this action:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats&theme=dark'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo Themed](.github/assets/repo-themed.svg)
@@ -281,7 +287,7 @@ Here are some examples of what you can create with this action:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats&show_owner=true'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo With Owner](.github/assets/repo-owner.svg)
@@ -297,7 +303,7 @@ Here are some examples of what you can create with this action:
     card: top-langs
     options: 'username=${{ github.repository_owner }}'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages](.github/assets/top-langs-basic.svg)
@@ -311,7 +317,7 @@ Here are some examples of what you can create with this action:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&layout=compact&langs_count=6'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Compact](.github/assets/top-langs-compact.svg)
@@ -325,7 +331,7 @@ Here are some examples of what you can create with this action:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&theme=radical&langs_count=8'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Themed](.github/assets/top-langs-themed.svg)
@@ -339,7 +345,7 @@ Here are some examples of what you can create with this action:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&hide=html,css,scss'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Hide](.github/assets/top-langs-hide.svg)
@@ -355,7 +361,7 @@ Here are some examples of what you can create with this action:
     card: gist
     options: 'id=bbfce31e0217a3689c8d961a356cb10d'
     path: profile/gist.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Gist](.github/assets/gist-basic.svg)
@@ -369,7 +375,7 @@ Here are some examples of what you can create with this action:
     card: gist
     options: 'id=bbfce31e0217a3689c8d961a356cb10d&theme=dark'
     path: profile/gist.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Gist Themed](.github/assets/gist-themed.svg)
@@ -385,7 +391,7 @@ Here are some examples of what you can create with this action:
     card: wakatime
     options: 'username=yourname'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Basic](.github/assets/wakatime-basic.svg)
@@ -399,7 +405,7 @@ Here are some examples of what you can create with this action:
     card: wakatime
     options: 'username=yourname&layout=compact'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Compact](.github/assets/wakatime-compact.svg)
@@ -413,7 +419,7 @@ Here are some examples of what you can create with this action:
     card: wakatime
     options: 'username=yourname&theme=radical&langs_count=5'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Themed](.github/assets/wakatime-themed.svg)
@@ -427,7 +433,7 @@ Here are some examples of what you can create with this action:
     card: wakatime
     options: 'username=yourname&hide_progress=true'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Hide Progress](.github/assets/wakatime-hide-progress.svg)
@@ -443,7 +449,7 @@ You can also use JSON format for options:
     card: stats
     options: '{"username":"${{ github.repository_owner }}","show_icons":true,"hide_rank":true,"theme":"dark"}'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ### Specify Version
@@ -457,7 +463,7 @@ You can specify a specific version of the binary to use:
     card: stats
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
     version: v1.1.0  # Use specific version
     # version: latest  # Or use latest release
 ```

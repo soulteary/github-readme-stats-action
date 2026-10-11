@@ -19,6 +19,8 @@ GitHub Actions 워크플로우에서 [GitHub Readme Stats](https://github.com/so
 
 ## 빠른 시작
 
+[PROFILE_STATS_TOKEN setup](README.md#token-setup)
+
 ```yaml
 name: Update README cards
 
@@ -43,7 +45,7 @@ jobs:
           card: stats
           options: 'username=${{ github.repository_owner }}&show_icons=true'
           path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Generate top languages card
         uses: soulteary/github-readme-stats-action@v1
@@ -51,7 +53,7 @@ jobs:
           card: top-langs
           options: 'username=${{ github.repository_owner }}&layout=compact&langs_count=6'
           path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Generate pin card
         uses: soulteary/github-readme-stats-action@v1
@@ -59,7 +61,7 @@ jobs:
           card: pin
           options: 'username=soulteary&repo=github-readme-stats'
           path: profile/pin-github-readme-stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Commit cards
         run: |
@@ -87,7 +89,7 @@ jobs:
 - `card` (필수): 생성할 카드 유형. 지원: `stats`, `top-langs`, `pin`, `wakatime`, `gist`.
 - `options`: 쿼리 문자열(`key=value&...`) 또는 JSON 형식의 카드 옵션. `username`이 생략되면 action은 저장소 소유자를 사용합니다.
 - `path`: SVG 파일의 출력 경로. 기본값: `profile/<card>.svg`.
-- `token`: GitHub 토큰(PAT 또는 `GITHUB_TOKEN`). 비공개 저장소 통계의 경우 `repo` 및 `read:user` 범위가 있는 [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)를 사용하세요.
+- `token`: GitHub 토큰(PAT 또는 `GITHUB_TOKEN`). 비공개 저장소 통계의 경우 `repo` 및 `read:user` 범위가 있는 [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)를 사용하세요. [PROFILE_STATS_TOKEN setup](README.md#token-setup).
 - `version`: 사용할 github-readme-stats 바이너리 버전(예: `v1.1.0`). 기본값: `v1.1.0`. 최신 버전을 얻으려면 `latest`를 사용하세요.
 - `repo`: `owner/repo` 형식의 GitHub 저장소. 기본값: `soulteary/github-readme-stats`.
 
@@ -167,7 +169,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats](.github/assets/stats-basic.svg)
@@ -181,7 +183,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&theme=dark'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Dark](.github/assets/stats-dark.svg)
@@ -195,7 +197,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&layout=compact'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Compact](.github/assets/stats-compact.svg)
@@ -209,7 +211,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats With Icons](.github/assets/stats-icons.svg)
@@ -223,7 +225,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&bg_color=0d1117&title_color=ff6b6b&text_color=c9d1d9&border_color=30363d'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Custom](.github/assets/stats-custom.svg)
@@ -237,7 +239,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&hide_rank=true&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Hide Rank](.github/assets/stats-hide-rank.svg)
@@ -253,7 +255,7 @@ jobs:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo](.github/assets/repo-basic.svg)
@@ -267,7 +269,7 @@ jobs:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats&theme=dark'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo Themed](.github/assets/repo-themed.svg)
@@ -281,7 +283,7 @@ jobs:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats&show_owner=true'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo With Owner](.github/assets/repo-owner.svg)
@@ -297,7 +299,7 @@ jobs:
     card: top-langs
     options: 'username=${{ github.repository_owner }}'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages](.github/assets/top-langs-basic.svg)
@@ -311,7 +313,7 @@ jobs:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&layout=compact&langs_count=6'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Compact](.github/assets/top-langs-compact.svg)
@@ -325,7 +327,7 @@ jobs:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&theme=radical&langs_count=8'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Themed](.github/assets/top-langs-themed.svg)
@@ -339,7 +341,7 @@ jobs:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&hide=html,css,scss'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Hide](.github/assets/top-langs-hide.svg)
@@ -355,7 +357,7 @@ jobs:
     card: gist
     options: 'id=bbfce31e0217a3689c8d961a356cb10d'
     path: profile/gist.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Gist](.github/assets/gist-basic.svg)
@@ -369,7 +371,7 @@ jobs:
     card: gist
     options: 'id=bbfce31e0217a3689c8d961a356cb10d&theme=dark'
     path: profile/gist.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Gist Themed](.github/assets/gist-themed.svg)
@@ -385,7 +387,7 @@ jobs:
     card: wakatime
     options: 'username=yourname'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Basic](.github/assets/wakatime-basic.svg)
@@ -399,7 +401,7 @@ jobs:
     card: wakatime
     options: 'username=yourname&layout=compact'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Compact](.github/assets/wakatime-compact.svg)
@@ -413,7 +415,7 @@ jobs:
     card: wakatime
     options: 'username=yourname&theme=radical&langs_count=5'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Themed](.github/assets/wakatime-themed.svg)
@@ -427,7 +429,7 @@ jobs:
     card: wakatime
     options: 'username=yourname&hide_progress=true'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Hide Progress](.github/assets/wakatime-hide-progress.svg)
@@ -443,7 +445,7 @@ jobs:
     card: stats
     options: '{"username":"${{ github.repository_owner }}","show_icons":true,"hide_rank":true,"theme":"dark"}'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ### 버전 지정
@@ -457,7 +459,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
     version: v1.1.0  # 특정 버전 사용
     # version: latest  # 또는 최신 버전 사용
 ```
