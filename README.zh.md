@@ -17,6 +17,12 @@
 
 本 Action 使用 Go 版本的 `github-readme-stats` 服务，从 GitHub Releases 下载预编译的二进制文件，通过 CLI 调用生成统计卡片。
 
+## 令牌配置
+
+创建个人访问令牌（classic）：公开仓库统计选择 `public_repo` 和 `read:user`；需要包含私有仓库时，用 `repo` 替代 `public_repo`（该权限也包含仓库写权限）。设置有效期，过期后更新 Secret。
+
+在运行工作流的仓库中，打开 **Settings → Secrets and variables → Actions**，创建名为 `PROFILE_STATS_TOKEN` 的仓库 Secret，填入令牌，并按下面的示例传入 `token`。默认 `GITHUB_TOKEN` 的权限限于工作流所在仓库，读取跨仓库的个人统计时可能失败。保留 `contents: write` 用于提交生成图片；检出和推送仍使用默认令牌。
+
 ## 快速开始
 
 ```yaml
@@ -43,7 +49,7 @@ jobs:
           card: stats
           options: 'username=${{ github.repository_owner }}&show_icons=true'
           path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Generate top languages card
         uses: soulteary/github-readme-stats-action@v1
@@ -51,7 +57,7 @@ jobs:
           card: top-langs
           options: 'username=${{ github.repository_owner }}&layout=compact&langs_count=6'
           path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Generate pin card
         uses: soulteary/github-readme-stats-action@v1
@@ -59,7 +65,7 @@ jobs:
           card: pin
           options: 'username=soulteary&repo=github-readme-stats'
           path: profile/pin-github-readme-stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.PROFILE_STATS_TOKEN }}
 
       - name: Commit cards
         run: |
@@ -87,7 +93,7 @@ jobs:
 - `card` (必需): 卡片类型。支持的类型：`stats`、`top-langs`、`pin`、`wakatime`、`gist`。
 - `options`: 卡片选项，可以是查询字符串格式 (`key=value&...`) 或 JSON 格式。如果省略 `username`，Action 会使用仓库所有者。
 - `path`: SVG 文件的输出路径。默认为 `profile/<card>.svg`。
-- `token`: GitHub token (PAT 或 `GITHUB_TOKEN`)。对于私有仓库统计，请使用具有 `repo` 和 `read:user` 权限的 [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)。
+- `token`: 用于跨仓库统计的个人访问令牌，示例使用 `${{ secrets.PROFILE_STATS_TOKEN }}`。参见上方令牌配置。
 - `version`: 要使用的 github-readme-stats 二进制文件版本（例如：`v1.1.0`）。默认为 `v1.1.0`。使用 `latest` 获取最新版本。
 - `repo`: GitHub 仓库，格式为 `owner/repo`。默认为 `soulteary/github-readme-stats`。
 
@@ -167,7 +173,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats](.github/assets/stats-basic.svg)
@@ -181,7 +187,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&theme=dark'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Dark](.github/assets/stats-dark.svg)
@@ -195,7 +201,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&layout=compact'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Compact](.github/assets/stats-compact.svg)
@@ -209,7 +215,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats With Icons](.github/assets/stats-icons.svg)
@@ -223,7 +229,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&bg_color=0d1117&title_color=ff6b6b&text_color=c9d1d9&border_color=30363d'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Custom](.github/assets/stats-custom.svg)
@@ -237,7 +243,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&hide_rank=true&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![GitHub Stats Hide Rank](.github/assets/stats-hide-rank.svg)
@@ -253,7 +259,7 @@ jobs:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo](.github/assets/repo-basic.svg)
@@ -267,7 +273,7 @@ jobs:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats&theme=dark'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo Themed](.github/assets/repo-themed.svg)
@@ -281,7 +287,7 @@ jobs:
     card: pin
     options: 'username=${{ github.repository_owner }}&repo=github-readme-stats&show_owner=true'
     path: profile/pin.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Pinned Repo With Owner](.github/assets/repo-owner.svg)
@@ -297,7 +303,7 @@ jobs:
     card: top-langs
     options: 'username=${{ github.repository_owner }}'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages](.github/assets/top-langs-basic.svg)
@@ -311,7 +317,7 @@ jobs:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&layout=compact&langs_count=6'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Compact](.github/assets/top-langs-compact.svg)
@@ -325,7 +331,7 @@ jobs:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&theme=radical&langs_count=8'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Themed](.github/assets/top-langs-themed.svg)
@@ -339,7 +345,7 @@ jobs:
     card: top-langs
     options: 'username=${{ github.repository_owner }}&hide=html,css,scss'
     path: profile/top-langs.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Top Languages Hide](.github/assets/top-langs-hide.svg)
@@ -355,7 +361,7 @@ jobs:
     card: gist
     options: 'id=bbfce31e0217a3689c8d961a356cb10d'
     path: profile/gist.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Gist](.github/assets/gist-basic.svg)
@@ -369,7 +375,7 @@ jobs:
     card: gist
     options: 'id=bbfce31e0217a3689c8d961a356cb10d&theme=dark'
     path: profile/gist.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![Gist Themed](.github/assets/gist-themed.svg)
@@ -385,7 +391,7 @@ jobs:
     card: wakatime
     options: 'username=yourname'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Basic](.github/assets/wakatime-basic.svg)
@@ -399,7 +405,7 @@ jobs:
     card: wakatime
     options: 'username=yourname&layout=compact'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Compact](.github/assets/wakatime-compact.svg)
@@ -413,7 +419,7 @@ jobs:
     card: wakatime
     options: 'username=yourname&theme=radical&langs_count=5'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Themed](.github/assets/wakatime-themed.svg)
@@ -427,7 +433,7 @@ jobs:
     card: wakatime
     options: 'username=yourname&hide_progress=true'
     path: profile/wakatime.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ![WakaTime Hide Progress](.github/assets/wakatime-hide-progress.svg)
@@ -443,7 +449,7 @@ jobs:
     card: stats
     options: '{"username":"${{ github.repository_owner }}","show_icons":true,"hide_rank":true,"theme":"dark"}'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
 ```
 
 ### 指定版本
@@ -457,7 +463,7 @@ jobs:
     card: stats
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
-    token: ${{ secrets.GITHUB_TOKEN }}
+    token: ${{ secrets.PROFILE_STATS_TOKEN }}
     version: v1.1.0  # 使用指定版本
     # version: latest  # 或使用最新版本
 ```
