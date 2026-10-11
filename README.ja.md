@@ -88,7 +88,7 @@ jobs:
 - `options`: クエリ文字列(`key=value&...`)または JSON 形式のカードオプション。`username` が省略された場合、action はリポジトリ所有者を使用します。
 - `path`: SVG ファイルの出力パス。デフォルト: `profile/<card>.svg`。
 - `token`: GitHub トークン(PAT または `GITHUB_TOKEN`)。プライベートリポジトリの統計の場合、`repo` および `read:user` スコープを持つ [PAT](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens) を使用してください。
-- `version`: 使用する github-readme-stats バイナリのバージョン(例: `v1.0.0`)。デフォルト: `v1.0.0`。最新バージョンを取得するには `latest` を使用します。
+- `version`: 使用する github-readme-stats バイナリのバージョン(例: `v1.1.0`)。デフォルト: `v1.1.0`。最新バージョンを取得するには `latest` を使用します。
 - `repo`: `owner/repo` 形式の GitHub リポジトリ。デフォルト: `soulteary/github-readme-stats`。
 
 ## 出力
@@ -458,7 +458,7 @@ jobs:
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
     token: ${{ secrets.GITHUB_TOKEN }}
-    version: v1.0.0  # 特定のバージョンを使用
+    version: v1.1.0  # 特定のバージョンを使用
     # version: latest  # または最新バージョンを使用
 ```
 
