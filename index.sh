@@ -266,8 +266,8 @@ case "$OS" in
   *) log_error "Unsupported OS: $OS"; exit 1 ;;
 esac
 
-# Version to use (default: latest)
-VERSION="${INPUT_VERSION:-latest}"
+# Version to use (default: v1.1.1, matching action.yml)
+VERSION="${INPUT_VERSION:-v1.1.1}"
 REPO="${INPUT_REPO:-soulteary/github-readme-stats}"
 BINARY_NAME="github-readme-stats-${SUFFIX}"
 BINARY="$(mktemp)"
