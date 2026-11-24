@@ -94,7 +94,7 @@ jobs:
 - `options`: 卡片选项，可以是查询字符串格式 (`key=value&...`) 或 JSON 格式。如果省略 `username`，Action 会使用仓库所有者。
 - `path`: SVG 文件的输出路径。默认为 `profile/<card>.svg`。
 - `token`: 用于跨仓库统计的个人访问令牌，示例使用 `${{ secrets.PROFILE_STATS_TOKEN }}`。参见上方令牌配置。
-- `version`: 要使用的 github-readme-stats 二进制文件版本（例如：`v1.1.0`）。默认为 `v1.1.0`。使用 `latest` 获取最新版本。
+- `version`: 要使用的 github-readme-stats 二进制文件版本（例如：`v1.1.1`）。默认为 `v1.1.1`。使用 `latest` 获取最新版本。
 - `repo`: GitHub 仓库，格式为 `owner/repo`。默认为 `soulteary/github-readme-stats`。
 
 ## 输出参数
@@ -464,7 +464,7 @@ jobs:
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
     token: ${{ secrets.PROFILE_STATS_TOKEN }}
-    version: v1.1.0  # 使用指定版本
+    version: v1.1.1  # 使用指定版本
     # version: latest  # 或使用最新版本
 ```
 

@@ -267,7 +267,7 @@ case "$OS" in
 esac
 
 # Version to use (default: latest)
-VERSION="${INPUT_VERSION:-latest}"
+VERSION="${INPUT_VERSION:-v1.1.1}"
 REPO="${INPUT_REPO:-soulteary/github-readme-stats}"
 BINARY_NAME="github-readme-stats-${SUFFIX}"
 BINARY="$(mktemp)"

@@ -94,7 +94,7 @@ This action is a recommended deployment option. You can also deploy on Vercel or
 - `options`: Options for the card as a query string (`key=value&...`) or JSON. If `username` is omitted, the action uses the repository owner.
 - `path`: Output path for the SVG file. Defaults to `profile/<card>.svg`.
 - `token`: PAT for cross-repository statistics, supplied via `${{ secrets.PROFILE_STATS_TOKEN }}`. See [token setup](README.md#token-setup).
-- `version`: Version of github-readme-stats binary to use (e.g., `v1.1.0`). Defaults to `v1.1.0`. Use `latest` to get the latest release.
+- `version`: Version of github-readme-stats binary to use (e.g., `v1.1.1`). Defaults to `v1.1.1`. Use `latest` to get the latest release.
 - `repo`: GitHub repository in format `owner/repo`. Defaults to `soulteary/github-readme-stats`.
 
 ## Outputs
@@ -464,7 +464,7 @@ You can specify a specific version of the binary to use:
     options: 'username=${{ github.repository_owner }}&show_icons=true'
     path: profile/stats.svg
     token: ${{ secrets.PROFILE_STATS_TOKEN }}
-    version: v1.1.0  # Use specific version
+    version: v1.1.1  # Use specific version
     # version: latest  # Or use latest release
 ```
 
